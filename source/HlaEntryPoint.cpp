@@ -10,6 +10,7 @@
 #include "TimeHandler.h"
 #include <thread>
 #include <CrowdSim/HlaSettings.h>
+#include "AgentTransferHandler.h"
 
 using namespace CrowdSim;
 
@@ -28,12 +29,21 @@ int main() throw(HlaException)
 	Give both worlds a tile requests listener because tile requests have to be passed between the 
 	bridge- and simulation world
 	*/
-	HlaInteractionListenerPtr tileRequestListener(new TileRequestListener());
-	simWorld->getHlaInteractionManager()->addHlaInteractionListener(tileRequestListener);
-	bridgeWorld->getHlaInteractionManager()->addHlaInteractionListener(tileRequestListener);
+	HlaInteractionListenerPtr sTileRequestListener(new SimTileRequestListener());
+	HlaInteractionListenerPtr bTileRequestListner(new BridgeTileRequestListener());
+	simWorld->getHlaInteractionManager()->addHlaInteractionListener(sTileRequestListener);
+	bridgeWorld->getHlaInteractionManager()->addHlaInteractionListener(bTileRequestListner);
 
-	HlaGridManagerListenerPtr gridM(new GridListener());
-	simWorld->getHlaGridManager()->addHlaGridManagerListener(gridM);
+	HlaAgentManagerListenerPtr sAgentListener(new SimAgentListener());
+	HlaAgentManagerListenerPtr bAgentListener(new BridgeAgentListener());
+	bridgeWorld->getHlaAgentManager()->addHlaAgentManagerListener(bAgentListener);
+	simWorld->getHlaAgentManager()->addHlaAgentManagerListener(sAgentListener);
+	
+
+	HlaGridManagerListenerPtr sGridM(new SimulationGridListener());
+	HlaGridManagerListenerPtr bGridM(new BridgeGridListener());
+	simWorld->getHlaGridManager()->addHlaGridManagerListener(sGridM);
+	bridgeWorld->getHlaGridManager()->addHlaGridManagerListener(bGridM);
 	
 	HlaWorldListenerPtr worldL(new WorldListener());
 	//simWorld->addHlaWorldListener(worldL);

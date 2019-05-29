@@ -18,6 +18,7 @@ public:
 	static int timeSpeed;
 	void operator()() const;
 	static std::thread pacerThread;
+	static bool isInSimWorld(std::wstring);
 };
 
 class TimeGrantListener : public HlaInteractionListener::Adapter {

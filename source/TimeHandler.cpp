@@ -30,7 +30,6 @@ void TimeGrantListener::timeGrant(bool local, HlaTimeGrantParametersPtr paramete
 
 	/*
 	Make sure we ignore ourselves
-	TODO check using an ID. Some federates can have the same name
 	*/
 	if (federateName == HlaEntryPoint::simConn.getWorld()->getFederateId()->getFederateName())
 	{
@@ -49,7 +48,7 @@ void TimeGrantListener::timeGrant(bool local, HlaTimeGrantParametersPtr paramete
 	else
 	{
 		federateTimeMap[it->first] = parameters->getReady();
-		std::cout << "\nCallback received from federate...";
+		//std::cout << "\nCallback received from federate...";
 	}
 
 	/*
@@ -60,7 +59,6 @@ void TimeGrantListener::timeGrant(bool local, HlaTimeGrantParametersPtr paramete
 	{
 		// If one federate hasn't returned a time tick with true, return from the function
 		if (it->second == false) {
-			std::cout << "\nNot all federates ready...";
 			return;
 		}
 	}
@@ -149,7 +147,7 @@ void TimeHandler::operator()() const
 		for (int phase = TimeType::PREPARE; phase < TimeType::COMPLETE + 1; phase++)
 		{
 			TimeType::TimeType type = static_cast<TimeType::TimeType>(phase);
-			std::cout << "\nPacer: advancing time to phase " + std::to_string(type);
+			//std::cout << "\nPacer: advancing time to phase " + std::to_string(type);
 			Sleep(timeSpeed);
 			sendTimeGrantToFederates(type, HlaEntryPoint::bridgeConn.getWorld(), false);
 
@@ -160,4 +158,11 @@ void TimeHandler::operator()() const
 			pause();
 		}
 	}
+}
+
+bool TimeHandler::isInSimWorld(std::wstring federateName) 
+{
+	std::map<std::wstring, bool>::iterator it = federateTimeMap.find(federateName);
+
+	return it == federateTimeMap.end();
 }
