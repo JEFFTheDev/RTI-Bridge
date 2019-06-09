@@ -1,3 +1,3 @@
 # RTI Bridge
-Basic API with some HLA RTI functionalities for prototype purposes
+RTI Bridge with HLA RTI functionalities for prototype purposes
 written in C++.
