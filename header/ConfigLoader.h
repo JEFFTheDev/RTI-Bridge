@@ -23,5 +23,6 @@ class HlaConfiguration : public HlaSettings {
 public:
 	HlaConfiguration(const std::wstring& crcHost, int crcPort) : HlaSettings(crcHost, crcPort) {
 		_federateName = L"RTI Bridge 2";
+		_federationName = L"Multi-node Crowd Simulation";
 	}
 };

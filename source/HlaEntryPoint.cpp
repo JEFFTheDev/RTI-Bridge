@@ -22,7 +22,7 @@ int main() throw(HlaException)
 	ConnectionHandler::isPacer = false;
 
 	// Intialize the bridge- and simulation world
-	HlaWorldPtr simWorld = HlaEntryPoint::createWorld(L"localhost", 8987);
+	HlaWorldPtr simWorld = HlaEntryPoint::createWorld(L"localhost", 8986);
 	HlaWorldPtr bridgeWorld = HlaEntryPoint::createWorld(L"localhost", 8989);
 	
 	/* 

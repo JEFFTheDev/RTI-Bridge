@@ -48,7 +48,6 @@ void TimeGrantListener::timeGrant(bool local, HlaTimeGrantParametersPtr paramete
 	else
 	{
 		federateTimeMap[it->first] = parameters->getReady();
-		//std::cout << "\nCallback received from federate...";
 	}
 
 	/*
